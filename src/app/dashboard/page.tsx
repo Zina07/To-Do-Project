@@ -1,9 +1,25 @@
-import Image from "next/image";
+import Link from "next/link";
 
-export default function Home() {
+export default function DashboardPage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-     <p>Hello Word La To do Project arrive !!! Page dashboard</p>
-    </main>
+    <div>
+      DashboardPage
+      <div>
+        {" "}
+        <Link href="/">Home</Link>
+      </div>
+      <div>
+        {" "}
+        <Link href="/login">login</Link>
+      </div>
+      <div>
+        {" "}
+        <Link href="./components/Footer">footer</Link>
+      </div>
+      <div>
+        {" "}
+        <Link href="./components/Header">header</Link>
+      </div>
+    </div>
   );
 }
