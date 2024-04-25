@@ -76,7 +76,8 @@ export default function Todo() {
           }
         </div>
         {/* ===================partie réseaux sociaux ==========titre + img =========================== */}
-        <div className="">
+        
+<div className="">
           <h3> Nous suivre ...</h3>
           {reseaux.map((reseau) => (
             <div className="flex items-center">
