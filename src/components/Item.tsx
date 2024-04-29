@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 export default function Item({ numero, title }) {
   return (
-    <div classNameName="">
+    <div className="">
       {numero} - {title}
     </div>
   );
