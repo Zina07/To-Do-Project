@@ -1,10 +1,10 @@
 "use client";
-import { useState, useEffect } from "react";
+import { Todo } from "./Todo";
 
-export default function Item({ numero, title }) {
+export default function Item({ num, title, designation }: Todo) {
   return (
     <div className="">
-      {numero} - {title}
+      {num} {title} {designation}
     </div>
   );
 }
