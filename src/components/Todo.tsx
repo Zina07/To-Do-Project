@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, ChangeEvent } from "react";
 import Item from "./Item";
 
 export interface Todo {
@@ -17,8 +17,9 @@ export default function Todo() {
   const [currentNewTodoTitle, setCurrentNewTodoTitle] = useState("");
   const [currentNewTodoNum, setCurrentNewTodoNum] = useState(1);
   const [currentNewTodoDesign, setCurrentNewTodoDesign] = useState("");
-  const myInput = useRef(null);
-  const myDesignation = useRef(null);
+  // typer useRef en html InputElement (en input)
+  const myInput = useRef<HTMLInputElement>(null);
+  const myDesignation = useRef<HTMLInputElement>(null);
 
   const [todos, setTodos] = useState<Todo[]>([
     // { title: "la tache", num: 1 },
@@ -33,13 +34,22 @@ export default function Todo() {
   //   [todos, myInput]
   // );
 
-  const changeTitle = (event: Event) => {
+  const changeTitle = (event: ChangeEvent<HTMLInputElement>) => {
     // console.log("value", event.target.value);
-    setCurrentNewTodoTitle(event.target.value);
+    // Vérifier que event.target (la cible du onChange) est bien du type input
+    if (event.target instanceof HTMLInputElement) {
+      setCurrentNewTodoTitle(event.target.value);
+    }
   };
-  const changeDesignation = (event: Event) => {
+  const changeDesignation = (event: ChangeEvent<HTMLInputElement>) => {
     // console.log("value", event.target.value);
-    setCurrentNewTodoDesign(event.target.value);
+    // Vérifier que event.target (la cible du onChange) est bien du type input
+    // Interface est un type architectural supérieur
+    // monArgument : Interface<Type>
+    // monArgument : Type
+    if (event.target instanceof HTMLInputElement) {
+      setCurrentNewTodoDesign(event.target.value);
+    }
   };
 
   const addItem = () => {
@@ -55,8 +65,8 @@ export default function Todo() {
     setCurrentNewTodoTitle("");
     setCurrentNewTodoDesign("");
 
-    myInput.current.value = "";
-    myDesignation.curent.value = "";
+    if (myInput.current) myInput.current.value = "";
+    if (myDesignation.current) myDesignation.current.value = "";
     //document.getElementById("task").value="";
   };
   // const addDesignation = () => {
@@ -75,32 +85,33 @@ export default function Todo() {
     { title: "Youtube", image: "https://picsum.photos/50" },
   ];
   return (
-    <div className="min-h-screen">
+    <div className="grid gap-6 mb-6 md:grid-cols-3">
       <div className="" id="liste">
         <div className="flex w-full mx-10 rounded bg-white">
-          <input
-            ref={myInput}
-            className=" w-full border-none bg-transparent px-4 py-1 text-gray-400 outline-none focus:outline-none "
-            type="search"
-            name="search"
-            placeholder="Ajoutez une tâche..."
-            id="task"
-            onChange={changeTitle}
-            // value={tache}
-          />
-          <div className="min-h-screen">
-            <div className="" id="designation">
-              <div className="flex w-full mx-10 rounded bg-white"></div>
-              <input
-                ref={myDesignation}
-                className=" m-2 border-none bg-transparent px-4 py-1 text-gray-400 outline-none focus:outline-none "
-                type="search"
-                name="search"
-                placeholder="Désignation..."
-                id="deisgn"
-                onChange={changeDesignation}
-                // value={tache}
-              />
+          <div className="" id="designation">
+            <div className="flex w-full mx-10 rounded bg-white"></div>
+            <input
+              ref={myDesignation}
+              className=" m-2 border-none bg-transparent px-4 py-1 text-gray-400 outline-none focus:outline-none "
+              type="search"
+              name="search"
+              placeholder="Désignation..."
+              id="deisgn"
+              onChange={changeDesignation}
+              // value={tache}
+            />
+            <input
+              ref={myInput}
+              className=" w-full border-none bg-transparent px-4 py-1 text-gray-400 outline-none focus:outline-none "
+              type="search"
+              name="search"
+              placeholder="Ajoutez une tâche..."
+              id="task"
+              onChange={changeTitle}
+              // value={tache}
+            />
+
+            <div className="flex items-start mb-6">
               <button
                 type="button"
                 className="m-2 rounded bg-blue-600 px-4 py-2 text-white"
