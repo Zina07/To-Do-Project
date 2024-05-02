@@ -34,6 +34,7 @@ export default function Todo() {
   //   [todos, myInput]
   // );
 
+  //  ============**********evenement dans l'input rajout d'un titre
   const changeTitle = (event: ChangeEvent<HTMLInputElement>) => {
     // console.log("value", event.target.value);
     // Vérifier que event.target (la cible du onChange) est bien du type input
@@ -41,6 +42,7 @@ export default function Todo() {
       setCurrentNewTodoTitle(event.target.value);
     }
   };
+  //  ============**********evenement dans l'input rajout d'une désignation
   const changeDesignation = (event: ChangeEvent<HTMLInputElement>) => {
     // console.log("value", event.target.value);
     // Vérifier que event.target (la cible du onChange) est bien du type input
@@ -69,15 +71,30 @@ export default function Todo() {
     if (myDesignation.current) myDesignation.current.value = "";
     //document.getElementById("task").value="";
   };
-  // const addDesignation = () => {
-  //   setCurrentNewTodoNum(currentNewTodoNum + 1);
-  //   const newTodo = {designation: currentNewTodoDesign,};
-  //   // setTodos(todos.push(newTodo))
-  //   setTodos([...todos, newTodo]);
-  //   setCurrentNewTodoDesign("");
-  //   Mydesignation.current.value = "";
-  // };
-
+  const addDesignation = () => {
+    setCurrentNewTodoNum(currentNewTodoNum + 1);
+    const newTodo = { designation: currentNewTodoDesign };
+    // setTodos(todos.push(newTodo))
+    setTodos([...todos, newTodo]);
+    setCurrentNewTodoDesign("");
+    Mydesignation.current.value = "";
+  };
+  // ================************bouton delete*************===============
+  const deletItem = (event) => {
+    console.log(event.target.data-position.idx)
+    // currentNewTodoNum = currentNewTodoNum + 1
+    // setCurrentNewTodoNum(currentNewTodoNum + 1);
+    // const newTodo = {
+    //   title: currentNewTodoTitle,
+    //   num: currentNewTodoNum,
+    //   designation: currentNewTodoDesign,
+    // };
+    // // setTodos(todos.push(newTodo))
+    // setTodos([...todos, newTodo]);
+    // setCurrentNewTodoTitle("");
+    // setCurrentNewTodoDesign("");
+  }
+  // ================************LES RÉSEAUX************===============
   const reseaux = [
     { title: "Facebook", image: "https://picsum.photos/50" },
     { title: "Twitter", image: "https://placebeard.it/50x50" },
@@ -152,13 +169,28 @@ export default function Todo() {
                     value=""
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   ></input>
+
+                  <button
+                    type="button"
+                    className="m-2 rounded bg-blue-600 px-4 py-2 text-white"
+                    id="plus"
+                    name="poubelle"
+                    data-position={idx}
+                    onClick={deletItem}
+                    // value={+}
+                  >
+                    <link
+                      rel="icon"
+                      href="/poubelle.png"
+                      type="image/poubelle-icon"
+                    />
+                  </button>
                 </div>
               </div>
             ))
           }
         </div>
 
-        <div className=""></div>
         {/* ===================partie réseaux sociaux ==========titre + img =========================== */}
 
         <div className="">
