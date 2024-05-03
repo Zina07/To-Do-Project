@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, ChangeEvent } from "react";
 import Item from "./Item";
+import Image from "next/image";
 
 export interface Todo {
   num: number;
@@ -77,11 +78,13 @@ export default function Todo() {
     // setTodos(todos.push(newTodo))
     setTodos([...todos, newTodo]);
     setCurrentNewTodoDesign("");
-    Mydesignation.current.value = "";
+    if (myDesignation.current) myDesignation.current.value = "";
   };
   // ================************bouton delete*************===============
-  const deletItem = (event) => {
-    console.log(event.target.data-position.idx)
+  const deletItem = (index) => {
+    console.log(index);
+    console.log(todos);
+    //const num_to_delete = 1;
     // currentNewTodoNum = currentNewTodoNum + 1
     // setCurrentNewTodoNum(currentNewTodoNum + 1);
     // const newTodo = {
@@ -93,7 +96,7 @@ export default function Todo() {
     // setTodos([...todos, newTodo]);
     // setCurrentNewTodoTitle("");
     // setCurrentNewTodoDesign("");
-  }
+  };
   // ================************LES RÉSEAUX************===============
   const reseaux = [
     { title: "Facebook", image: "https://picsum.photos/50" },
@@ -102,43 +105,45 @@ export default function Todo() {
     { title: "Youtube", image: "https://picsum.photos/50" },
   ];
   return (
-    <div className="grid gap-6 mb-6 md:grid-cols-3">
-      <div className="" id="liste">
-        <div className="flex w-full mx-10 rounded bg-white">
-          <div className="" id="designation">
-            <div className="flex w-full mx-10 rounded bg-white"></div>
-            <input
-              ref={myDesignation}
-              className=" m-2 border-none bg-transparent px-4 py-1 text-gray-400 outline-none focus:outline-none "
-              type="search"
-              name="search"
-              placeholder="Désignation..."
-              id="deisgn"
-              onChange={changeDesignation}
-              // value={tache}
-            />
-            <input
-              ref={myInput}
-              className=" w-full border-none bg-transparent px-4 py-1 text-gray-400 outline-none focus:outline-none "
-              type="search"
-              name="search"
-              placeholder="Ajoutez une tâche..."
-              id="task"
-              onChange={changeTitle}
-              // value={tache}
-            />
+    <div>
+      <div className="">
+        <div className="" id="liste">
+          <div className="flex w-full mx-10 rounded bg-white">
+            <div className="" id="designation">
+              <div className="flex w-full mx-10 rounded bg-white"></div>
+              <input
+                ref={myDesignation}
+                className=" m-2 border-none bg-transparent px-4 py-1 text-gray-400 outline-none focus:outline-none "
+                type="search"
+                name="search"
+                placeholder="Désignation..."
+                id="deisgn"
+                onChange={changeDesignation}
+                // value={tache}
+              />
+              <input
+                ref={myInput}
+                className=" w-full border-none bg-transparent px-4 py-1 text-gray-400 outline-none focus:outline-none "
+                type="search"
+                name="search"
+                placeholder="Ajoutez une tâche..."
+                id="task"
+                onChange={changeTitle}
+                // value={tache}
+              />
 
-            <div className="flex items-start mb-6">
-              <button
-                type="button"
-                className="m-2 rounded bg-blue-600 px-4 py-2 text-white"
-                id="plus"
-                name="ajout"
-                onClick={addItem}
-                // value={+}
-              >
-                Ajouter
-              </button>
+              <div className="flex items-start mb-6">
+                <button
+                  type="button"
+                  className="m-2 rounded bg-blue-600 px-4 py-2 text-white"
+                  id="plus"
+                  name="ajout"
+                  onClick={addItem}
+                  // value={+}
+                >
+                  Ajouter
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -173,16 +178,16 @@ export default function Todo() {
                   <button
                     type="button"
                     className="m-2 rounded bg-blue-600 px-4 py-2 text-white"
-                    id="plus"
+                    id="efface"
                     name="poubelle"
-                    data-position={idx}
-                    onClick={deletItem}
+                    onClick={(e) => deletItem(idx)}
                     // value={+}
                   >
-                    <link
-                      rel="icon"
-                      href="/poubelle.png"
-                      type="image/poubelle-icon"
+                    <Image
+                      src="/poubelle.png"
+                      width={30}
+                      height={30}
+                      alt="Picture of the author"
                     />
                   </button>
                 </div>
@@ -190,23 +195,21 @@ export default function Todo() {
             ))
           }
         </div>
+      </div>
 
-        {/* ===================partie réseaux sociaux ==========titre + img =========================== */}
-
-        <div className="">
-          <h3> Nous suivre ...</h3>
-          {reseaux.map((reseau, idx) => (
-            <div className="flex items-center" key={idx}>
-              <img
-                className="rounded-full w-86 h-86"
-                src={reseau.image}
-                alt="image description"
-                id="rsImage"
-              ></img>
-              {reseau.title}
-            </div>
-          ))}
-        </div>
+      <div className="">
+        <h3> Nous suivre ...</h3>
+        {reseaux.map((reseau, idx) => (
+          <div className="flex items-center" key={idx}>
+            <img
+              className="rounded-full w-86 h-86"
+              src={reseau.image}
+              alt="image description"
+              id="rsImage"
+            ></img>
+            {reseau.title}
+          </div>
+        ))}
       </div>
     </div>
   );
