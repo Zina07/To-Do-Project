@@ -4,11 +4,11 @@ import { useState, useRef, useEffect, ChangeEvent } from "react";
 import Item from "./Item";
 import Image from "next/image";
 
-export interface Todo {
+export type Todo = {
   num: number;
   title: string;
   designation: string;
-}
+};
 
 export default function Todo() {
   // A faire
@@ -17,17 +17,13 @@ export default function Todo() {
 
   const [currentNewTodoTitle, setCurrentNewTodoTitle] = useState("");
   const [currentNewTodoNum, setCurrentNewTodoNum] = useState(1);
-  const [currentNewTodoDesign, setCurrentNewTodoDesign] = useState("");
+  const [currentNewTodoDesignation, setCurrentNewTodoDesignation] =
+    useState("");
   // typer useRef en html InputElement (en input)
   const myInput = useRef<HTMLInputElement>(null);
   const myDesignation = useRef<HTMLInputElement>(null);
 
-  const [todos, setTodos] = useState<Todo[]>([
-    // { title: "la tache", num: 1 },
-    // { title: "acheter des cookies", num: 2 },
-    // { title: "partir en courant", num: 3 },
-    // { title: "acheter billet de train", num: 4 },
-  ]);
+  const [todos, setTodos] = useState<Todo[]>([]);
 
   // function myCallback() {}
   // useEffect(
@@ -51,7 +47,7 @@ export default function Todo() {
     // monArgument : Interface<Type>
     // monArgument : Type
     if (event.target instanceof HTMLInputElement) {
-      setCurrentNewTodoDesign(event.target.value);
+      setCurrentNewTodoDesignation(event.target.value);
     }
   };
 
@@ -61,41 +57,24 @@ export default function Todo() {
     const newTodo = {
       title: currentNewTodoTitle,
       num: currentNewTodoNum,
-      designation: currentNewTodoDesign,
+      designation: currentNewTodoDesignation,
     };
     // setTodos(todos.push(newTodo))
     setTodos([...todos, newTodo]);
     setCurrentNewTodoTitle("");
-    setCurrentNewTodoDesign("");
+    setCurrentNewTodoDesignation("");
 
     if (myInput.current) myInput.current.value = "";
     if (myDesignation.current) myDesignation.current.value = "";
     //document.getElementById("task").value="";
   };
-  const addDesignation = () => {
-    setCurrentNewTodoNum(currentNewTodoNum + 1);
-    const newTodo = { designation: currentNewTodoDesign };
-    // setTodos(todos.push(newTodo))
-    setTodos([...todos, newTodo]);
-    setCurrentNewTodoDesign("");
-    if (myDesignation.current) myDesignation.current.value = "";
-  };
+
   // ================************bouton delete*************===============
-  const deletItem = (index) => {
-    console.log(index);
+  const deleteItem = (index: number) => {
+    //console.log(index);
     console.log(todos);
-    //const num_to_delete = 1;
-    // currentNewTodoNum = currentNewTodoNum + 1
-    // setCurrentNewTodoNum(currentNewTodoNum + 1);
-    // const newTodo = {
-    //   title: currentNewTodoTitle,
-    //   num: currentNewTodoNum,
-    //   designation: currentNewTodoDesign,
-    // };
-    // // setTodos(todos.push(newTodo))
-    // setTodos([...todos, newTodo]);
-    // setCurrentNewTodoTitle("");
-    // setCurrentNewTodoDesign("");
+    todos.splice(index, 1);
+    setTodos([...todos]);
   };
   // ================************LES RÉSEAUX************===============
   const reseaux = [
@@ -180,7 +159,7 @@ export default function Todo() {
                     className="m-2 rounded bg-blue-600 px-4 py-2 text-white"
                     id="efface"
                     name="poubelle"
-                    onClick={(e) => deletItem(idx)}
+                    onClick={(e) => deleteItem(idx)}
                     // value={+}
                   >
                     <Image

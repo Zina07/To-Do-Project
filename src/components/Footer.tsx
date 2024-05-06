@@ -1,10 +1,14 @@
+"use client";
+
+import { useState } from "react";
+
 export default function Footer() {
-  const footerLinks = [
+  const [footerLinks, _] = useState([
     { label: "Accueil", href: "../page.tsx" },
     { label: "Politique de confidentialité", href: "/politique" },
     { label: "Mentions légales", href: "/mentions-legales" },
-  ];
-  
+  ]);
+
   return (
     <footer className="bg-white lg shadow ">
       <div className="bg-gradient-to-r from-gray-500 ...">
@@ -17,8 +21,9 @@ export default function Footer() {
                 // for todo of todos {
                 //   return
                 // }
-                footerLinks.map((footerLink) => (
+                footerLinks.map((footerLink, idx) => (
                   <div
+                    key={idx}
                     className="mb-6 bg-blue-greeb-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
              focus:border-blue-500 block w-m p-2.5 cursor-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 
              dark:focus:ring-blue-500 dark:focus:border-blue-500"
